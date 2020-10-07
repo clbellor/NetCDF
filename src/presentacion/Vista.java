@@ -52,8 +52,9 @@ public class Vista extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabelTotalVariables = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItemAbrir = new javax.swing.JMenuItem();
@@ -92,6 +93,11 @@ public class Vista extends javax.swing.JFrame {
                 "Name", "Data Type ", "Descripction", "Dimenions", "Group", "Shape", "Units"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jButton1.setBackground(new java.awt.Color(255, 255, 255));
@@ -113,10 +119,12 @@ public class Vista extends javax.swing.JFrame {
 
         jLabelTotalVariables.setText("-");
 
-        jTextField1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
         jButton2.setBackground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Mostar Imagen");
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane2.setViewportView(jTextArea1);
 
         jMenu1.setText("Archivo");
 
@@ -158,22 +166,21 @@ public class Vista extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabelFichero, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabelTotalVariables)))
+                        .addComponent(jLabel1)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabelFichero, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabelTotalVariables, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2)
+                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -191,13 +198,13 @@ public class Vista extends javax.swing.JFrame {
                     .addComponent(jLabelTotalVariables))
                 .addGap(8, 8, 8)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2)
-                .addContainerGap(78, Short.MAX_VALUE))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
 
         pack();
@@ -206,7 +213,6 @@ public class Vista extends javax.swing.JFrame {
     private void jMenuItemCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCerrarActionPerformed
         // TODO add your handling code here:
         System.exit(0);
-        controlador.Cerrar();
     }//GEN-LAST:event_jMenuItemCerrarActionPerformed
 
     private void jMenuItemAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAbrirActionPerformed
@@ -220,14 +226,13 @@ public class Vista extends javax.swing.JFrame {
             fichero = fileChooser.getSelectedFile();
             jLabelFichero.setBackground(Color.LIGHT_GRAY);
             jLabelFichero.setText(""+fichero);   
-            
-           
+
             // Aquí debemos abrir y leer el fichero.
             NetcdfFile ncdf = null;
+            
             try {
-                ncdf = NetcdfFile.open(""+fichero);
-            } catch (IOException ex) {
-                
+                ncdf = NetcdfFile.open(fichero.toString());
+            } catch (IOException ex){
                 jLabelFichero.setBackground(Color.red);
                 jLabelFichero.setText("DOCUMENTO NO VALIDO");
             }
@@ -237,9 +242,7 @@ public class Vista extends javax.swing.JFrame {
             System.out.println("Total de variables "+vars.size());
             jLabelTotalVariables.setText(""+vars.size());
             int j=0;
-            
-            for( Variable var: vars){
-                
+            for(Variable var: vars){
                 jTable1.setValueAt(var.getFullName(), j, 0);
                 jTable1.setValueAt(var.getDataType().name(), j, 1);
                 jTable1.setValueAt(var.getDescription(), j, 2);
@@ -258,10 +261,9 @@ public class Vista extends javax.swing.JFrame {
                         }
                     }
                 jTable1.setValueAt(var.getUnitsString(), j, 6);
-                
                 j++;
                 
-                //para mostarr en pantalla 
+                //para mostarr en consola 
                 System.out.print("Nombre Variable: " + var.getFullName() + 
                              " , Tipo Dato: " + var.getDataType().name() + 
                              ", Dimensiones: " + var.getDimensionsString() + 
@@ -283,28 +285,39 @@ public class Vista extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemGuardarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
-            // Aquí debemos abrir y leer el fichero.
-            NetcdfFile ncdf = null;
-        try {
-            ncdf = NetcdfFile.open("C:/Users/Bello Restrepo/Desktop/Archivo CDF-NC/outN .1");
-        } catch (IOException ex) {
-            Logger.getLogger(Vista.class.getName()).log(Level.SEVERE, null, ex);
+        // Aquí debemos abrir y leer el fichero.
+        NetcdfFile ncdf = null;
+        String fichero1 = jLabelFichero.getText();
+        
+        if(fichero1=="C://"||fichero1=="DOCUMENTO NO VALIDO"){
+                jTextArea1.setText("...");
+        }else{
+            try {
+                ncdf = NetcdfFile.open(fichero1);
+                jTextArea1.setText("Ubicacion: "+fichero1+"\n");
+            } catch (IOException ex) {
+                    Logger.getLogger(Vista.class.getName()).log(Level.SEVERE, null, ex);
+                }
+        List<Variable> vars = ncdf.getVariables();
+        for( Variable var: vars){          
+            List<Attribute> attrs = var.getAttributes();
+            jTextArea1.append("Nombre Variable: " + var.getFullName()+"\n");
+            jTextArea1.append("Total de atributos :"+attrs.size()+"\n");
+            for (Attribute attr: attrs){
+                jTextArea1.append("  Nombre atributo: " + attr.getFullName()+"\n"+"   Tipo: " + attr.getDataType().name()+"\n"+"   Valor numerico :"+attr.getNumericValue()+"\n"+"   Valor cadena :"+attr.getStringValue()+"\n");
+            }                                        
         }
-            List<Variable> vars = ncdf.getVariables();
-            
-            for( Variable var: vars){          
-                List<Attribute> attrs = var.getAttributes();
-                System.out.println("Nombre Variable: " + var.getFullName());
-
-                System.out.println("Total de atributos :"+attrs.size());
-                for (Attribute attr: attrs){
-                    System.out.println("  Nombre atributo: " + attr.getFullName()+" (Tipo: " + attr.getDataType().name()+"  Valor numerico :"+attr.getNumericValue()+"");
-                    System.out.println("Valor cadena () :"+attr.getStringValue());
+    }
     }//GEN-LAST:event_jButton1ActionPerformed
-            }
-}
 
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+            System.out.println("Columna: "+jTable1.getSelectedColumn());
+            System.out.println("Fila : "+jTable1.getSelectedRow());
+    }//GEN-LAST:event_jTable1MouseClicked
+      
+
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton jButton1;
     public javax.swing.JButton jButton2;
@@ -319,8 +332,9 @@ public class Vista extends javax.swing.JFrame {
     public javax.swing.JMenuItem jMenuItemCerrar;
     public javax.swing.JMenuItem jMenuItemGuardar;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     public javax.swing.JTable jTable1;
-    public javax.swing.JTextField jTextField1;
+    public javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 
     public Modelo getModelo() {
