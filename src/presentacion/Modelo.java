@@ -1,6 +1,7 @@
 package presentacion;
 
 import java.awt.Color;
+import logica.Respuesta;
 import logica.Sistema;
 
 /**
@@ -42,5 +43,9 @@ public class Modelo {
         ventana.setBounds(20, 40, 800, 600);
         ventana.getContentPane().setBackground(Color.LIGHT_GRAY);
         ventana.setVisible(true);
+    }
+    
+    public Respuesta leerArchivo(String filename){
+        return getSistema().getLecturaArchivo().leerArchivo(filename);
     }
 }

@@ -9,27 +9,14 @@ import persistencia.DatosDTO;
 public class Sistema {
 
     private DatosDTO datos;
+    private final LecturaArchivo lecturaArchivo;
 
     public Sistema() {
-
+        this.lecturaArchivo = new LecturaArchivo();
     }
-
-    /**
-     * Metodo para abrir dibujo de un archivo guardado
-     * @param nombreArchivo
-     * @throws Exception 
-     */
-    public void abrirArchivo(File nombreArchivo) throws Exception {
-        //pendiente de implementar 
-    }
-
-    /**
-     * Metodo para guardar dibujo en un archivo
-     * @param nombreArchivo
-     * @throws Exception 
-     */
-    public void guardarArchivo(File nombreArchivo) throws Exception {
-        //pendiente de implementar 
+    
+     public LecturaArchivo getLecturaArchivo() {
+        return lecturaArchivo;
     }
     
     public DatosDTO getDatos() {
