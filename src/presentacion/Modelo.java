@@ -40,8 +40,6 @@ public class Modelo {
      */
     public void iniciar() {
         Vista ventana = getVista();
-        ventana.setBounds(20, 40, 800, 600);
-        ventana.getContentPane().setBackground(Color.LIGHT_GRAY);
         ventana.setVisible(true);
     }
     
