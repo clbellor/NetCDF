@@ -1,10 +1,9 @@
 package logica;
 
-import java.io.File;
 import persistencia.DatosDTO;
 
 /**
- * Clase principal logica para creacion de dibujos, guardar y abrir archivos
+ * Clase principal logica, centraliza funciones para tratamiento de archivo
  */
 public class Sistema {
 

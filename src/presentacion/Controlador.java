@@ -2,9 +2,7 @@ package presentacion;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.Arrays;
 import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.event.ListSelectionEvent;
@@ -31,6 +29,9 @@ public class Controlador implements ListSelectionListener {
         iniciarEventos();
     }
 
+    /**
+     * metodo para iniciar eventos de botones
+     */
     public void iniciarEventos() {
         vista.getTblDatos().getSelectionModel().addListSelectionListener(this);
     }
@@ -51,6 +52,10 @@ public class Controlador implements ListSelectionListener {
         System.exit(0);
     }
 
+    /**
+     * metodo abrir fichero usando los metodos de sistema de clase logica
+     * @return File
+     */
     public File abrirFichero() {
         JFileChooser fileChooser = new JFileChooser();
         Component areaTexto = null;
@@ -63,6 +68,10 @@ public class Controlador implements ListSelectionListener {
         return fichero;
     }
 
+    /**
+     * Metodo para leer los datos del archivo despues de llamar abrirFichero()
+     * @param filename 
+     */
     public void leerArchivo(String filename) {
         try {
             Respuesta<List<Variable>> respuesta = vista.getModelo().leerArchivo(filename);
@@ -81,6 +90,9 @@ public class Controlador implements ListSelectionListener {
         }
     }
 
+    /**
+     * Muestra los valores de las variables del archivo
+     */
     public void mostrarValores() {
         Array data;
         try {
@@ -95,16 +107,12 @@ public class Controlador implements ListSelectionListener {
         }
     }
 
+    /**
+     * Muestra los atributos de las variables del archivo
+     */
     public void mostrarAtributos() {
         try {
-            if (this.fila != null) {
-                /*this.variables.get(this.fila).attributes().forEach(attr -> {
-                    vista.getTxtAreaAtr().setText("Nombre atributo: " + attr.getFullName() 
-                            + "\n" + "   Tipo: " + attr.getDataType().name() 
-                            + "\n" + "   Valor numerico :" + attr.getNumericValue() 
-                            + "\n" + "   Valor cadena :" + attr.getStringValue() + "\n");
-                });*/
-                
+            if (this.fila != null) {               
                 vista.getTxtAreaAtr().setText(this.variables.get(this.fila).toString());
             } else {
                 vista.getTxtAreaAtr().setText("Seleccione una fila");
@@ -114,6 +122,11 @@ public class Controlador implements ListSelectionListener {
         }
     }
 
+    /**
+     * metodo para obtener dimensiones
+     * @param d lista de dimensiones
+     * @return String
+     */
     public String obtenerDimensiones(List<Dimension> d) {
         String cadena = "";
         if (!d.isEmpty()) {
@@ -128,6 +141,11 @@ public class Controlador implements ListSelectionListener {
         return cadena;
     }
 
+    /**
+     * Metodo para obtener formas
+     * @param f formas
+     * @return String
+     */
     public String obtenerForma(int[] f) {
         String cadena = "";
         if (f.length > 0) {

@@ -1,5 +1,10 @@
 package logica;
 
+/**
+ * Clase generica con estructura de respuesta con error, mensaje
+ * y datos mediante el objeto de la calse generica
+ * @param <T> Objeto generico
+ */
 public class Respuesta<T> {
 
     private boolean error;

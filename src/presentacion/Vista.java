@@ -2,7 +2,6 @@ package presentacion;
 
 import java.io.File;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JTable;
@@ -24,6 +23,10 @@ public class Vista extends javax.swing.JFrame {
         this.setTitle("NetCDF / Informatica 1 / Taller 2");
     }
 
+    /**
+     * Metodo para obtener unica instancia de Controlador usando Singleton
+     * @return Controlador
+     */
     public Controlador getControl() {
         if (controlador == null) {
             controlador = new Controlador(this);

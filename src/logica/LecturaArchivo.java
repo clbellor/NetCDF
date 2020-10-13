@@ -2,16 +2,21 @@ package logica;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import ucar.ma2.Array;
 import ucar.nc2.NetcdfFile;
 import ucar.nc2.Variable;
 
+/**
+ * Clase lectura archivo netCDF mediante libreria externa
+ */
 public class LecturaArchivo {
 
     private List<Variable> variables;
-            
+       
+    /**
+     * Metodo que lee el archivo mediante NetcdfFile.open
+     * @param filename nombre del archivo a leer
+     * @return Respuesta
+     */
     public Respuesta leerArchivo(String filename) {
         NetcdfFile ncfile;
         Respuesta<List<Variable>> respuesta = new Respuesta();
@@ -27,6 +32,10 @@ public class LecturaArchivo {
         return respuesta;
     }
 
+    /**
+     * retorna lista de variables del archivo leido
+     * @return lista Variables
+     */
     public List<Variable> getVariables() {
         return variables;
     }
