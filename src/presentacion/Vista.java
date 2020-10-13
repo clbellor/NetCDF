@@ -8,8 +8,10 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import ucar.ma2.DataType;
@@ -84,11 +86,6 @@ public class Vista extends javax.swing.JFrame {
 
         btnAttr.setBackground(new java.awt.Color(255, 255, 255));
         btnAttr.setText("Mostar Atributos");
-        btnAttr.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAttrActionPerformed(evt);
-            }
-        });
 
         jLabelFichero.setText("C://");
 
@@ -110,11 +107,6 @@ public class Vista extends javax.swing.JFrame {
 
         btnValue.setBackground(new java.awt.Color(255, 255, 255));
         btnValue.setText("Mostar Valores");
-        btnValue.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnValueActionPerformed(evt);
-            }
-        });
 
         jMenu1.setText("Archivo");
 
@@ -206,109 +198,25 @@ public class Vista extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItemCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCerrarActionPerformed
+    private void tblDatosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDatosMouseClicked
         // TODO add your handling code here:
-        System.exit(0);
-    }//GEN-LAST:event_jMenuItemCerrarActionPerformed
+        getControl().setFila(tblDatos.getSelectedRow());
+    }//GEN-LAST:event_tblDatosMouseClicked
 
     private void jMenuItemAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAbrirActionPerformed
-
+        // TODO add your handling code here:
         fichero = getControl().abrirFichero();
         getControl().leerArchivo(fichero.toString());
-
-        // Aquí debemos abrir y leer el fichero.
-//            NetcdfFile ncdf = null;
-//
-//            try {
-//                ncdf = NetcdfFile.open(fichero.toString());
-//            } catch (IOException ex) {
-//                jLabelFichero.setBackground(Color.red);
-//                jLabelFichero.setText("DOCUMENTO NO VALIDO");
-//            }
-//            List<Variable> vars = ncdf.getVariables();
-//            System.out.println("Ubicacion archivo :" + ncdf.getLocation());
-//            System.out.println("Total de variables " + vars.size());
-//            jLabelTotalVariables.setText("" + vars.size());
-//            int j = 0;
-//            for (Variable var : vars) {
-//                jTable1.setValueAt(var.getFullName(), j, 0);
-//                jTable1.setValueAt(var.getDataType().name(), j, 1);
-//                jTable1.setValueAt(var.getDescription(), j, 2);
-//                jTable1.setValueAt(var.getDimensionsString(), j, 3);
-//                List<Group> groups = ncdf.getRootGroup().getGroups();
-//                for (Group group : groups) {
-//                    jTable1.setValueAt(group.getNameAndAttributes(), j, 4);
-//                }
-//                int[] size = var.getShape();
-//                for (int i = 0; i < size.length; ++i) {
-//                    if (i <= 0) {
-//                        jTable1.setValueAt("" + size[i], j, 5);
-//                    }
-//                    if (i > 0) {
-//                        jTable1.setValueAt("" + size[i - 1] + "," + size[i], j, 5);
-//                    }
-//                }
-//                jTable1.setValueAt(var.getUnitsString(), j, 6);
-//                j++;
-//
-//                //para mostarr en consola 
-//                System.out.print("Nombre Variable: " + var.getFullName()
-//                        + " , Tipo Dato: " + var.getDataType().name()
-//                        + ", Dimensiones: " + var.getDimensionsString()
-//                        + ", Tamaño:");
-//                int[] size1 = var.getShape();
-//                for (int i = 0; i < size1.length; ++i) {
-//                    System.out.print(" " + size[i]);
-//                }
-//                System.out.print(",Descripcion: " + var.getDescription());
-//                System.out.print(", Unidades : " + var.getUnitsString());
-//                System.out.println(")");
-//            }
     }//GEN-LAST:event_jMenuItemAbrirActionPerformed
 
     private void jMenuItemGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemGuardarActionPerformed
         // TODO add your handling code here:
-
     }//GEN-LAST:event_jMenuItemGuardarActionPerformed
 
-    private void btnAttrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAttrActionPerformed
-        // Aquí debemos abrir y leer el fichero.
-//        NetcdfFile ncdf = null;
-//        String fichero1 = jLabelFichero.getText();
-//
-//        if (fichero1 == "C://" || fichero1 == "DOCUMENTO NO VALIDO") {
-//            jTextAreaAttr.setText("...");
-//        } else {
-//            try {
-//                ncdf = NetcdfFile.open(fichero1);
-//                jTextAreaAttr.setText("Ubicacion: " + fichero1 + "\n");
-//            } catch (IOException ex) {
-//                Logger.getLogger(Vista.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//            List<Variable> vars = ncdf.getVariables();
-//            for (Variable var : vars) {
-//                List<Attribute> attrs = var.getAttributes();
-//                jTextAreaAttr.append("Nombre Variable: " + var.getFullName() + "\n");
-//                jTextAreaAttr.append("Total de atributos :" + attrs.size() + "\n");
-//                for (Attribute attr : attrs) {
-//                    jTextAreaAttr.append("  Nombre atributo: " + attr.getFullName() + "\n" + "   Tipo: " + attr.getDataType().name() + "\n" + "   Valor numerico :" + attr.getNumericValue() + "\n" + "   Valor cadena :" + attr.getStringValue() + "\n");
-//                }
-//            }
-//        }
-        getControl().mostrarAtributos();
-    }//GEN-LAST:event_btnAttrActionPerformed
-
-    private void tblDatosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDatosMouseClicked
+    private void jMenuItemCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCerrarActionPerformed
         // TODO add your handling code here:
-        System.out.println("Columna: " + tblDatos.getSelectedColumn());
-        System.out.println("Fila : " + tblDatos.getSelectedRow());
-        getControl().setFila(tblDatos.getSelectedRow());
-    }//GEN-LAST:event_tblDatosMouseClicked
-
-    private void btnValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnValueActionPerformed
-        // TODO add your handling code here:
-        getControl().mostrarValores();
-    }//GEN-LAST:event_btnValueActionPerformed
+        getControl().cerrar();
+    }//GEN-LAST:event_jMenuItemCerrarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -351,4 +259,21 @@ public class Vista extends javax.swing.JFrame {
         return modelo;
     }
 
+    public JButton getBtnValue() {
+        return btnValue;
+    }
+    
+    public JButton getBtnAttr() {
+        return btnAttr;
+    }
+    
+    public JMenuItem getjMenuItemAbrir() {
+        return jMenuItemAbrir;
+    }
+
+    public JMenuItem getjMenuItemCerrar() {
+        return jMenuItemCerrar;
+    }
+    
+    
 }

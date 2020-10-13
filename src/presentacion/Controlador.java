@@ -2,6 +2,7 @@ package presentacion;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
@@ -19,7 +20,7 @@ import ucar.nc2.Variable;
 /**
  * clase controlador vista principal
  */
-public class Controlador {
+public class Controlador implements ActionListener {
 
     private final Vista vista;
 
@@ -29,12 +30,31 @@ public class Controlador {
 
     public Controlador(Vista ventana) {
         vista = ventana;
+        iniciarEventos();
+    }
+    
+    public void iniciarEventos(){
+        vista.getBtnAttr().addActionListener(this);
+        vista.getBtnValue().addActionListener(this);
+    }
+    
+    public void actionPerformed(ActionEvent e) {
+         switch (e.getActionCommand()) {
+            case "Mostar Atributos":
+                mostrarAtributos();
+                break;
+            case "Mostar Valores":
+                mostrarValores();
+                break;    
+            default:
+                throw new AssertionError();
+        }
     }
 
     /**
      * metodo para cerrar programa
      */
-    public void Cerrar() {
+    public void cerrar() {
         System.exit(0);
     }
 
