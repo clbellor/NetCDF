@@ -1,24 +1,12 @@
 package presentacion;
 
-import java.awt.Color;
-import java.awt.Component;
 import java.io.File;
-import java.io.IOException;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
-import ucar.ma2.DataType;
-import ucar.nc2.Attribute;
-import ucar.nc2.Group;
-import ucar.nc2.NetcdfFile;
-import ucar.nc2.Variable;
 
 public class Vista extends javax.swing.JFrame {
 
@@ -56,9 +44,11 @@ public class Vista extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabelTotalVariables = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTextAreaAttr = new javax.swing.JTextArea();
         btnValue = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txtAreaAtr = new javax.swing.JTextArea();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        txtAreaVal = new javax.swing.JTextArea();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItemAbrir = new javax.swing.JMenuItem();
@@ -101,12 +91,16 @@ public class Vista extends javax.swing.JFrame {
         jButton2.setBackground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Mostar Imagen");
 
-        jTextAreaAttr.setColumns(20);
-        jTextAreaAttr.setRows(5);
-        jScrollPane2.setViewportView(jTextAreaAttr);
-
         btnValue.setBackground(new java.awt.Color(255, 255, 255));
         btnValue.setText("Mostar Valores");
+
+        txtAreaAtr.setColumns(20);
+        txtAreaAtr.setRows(5);
+        jScrollPane3.setViewportView(txtAreaAtr);
+
+        txtAreaVal.setColumns(20);
+        txtAreaVal.setRows(5);
+        jScrollPane4.setViewportView(txtAreaVal);
 
         jMenu1.setText("Archivo");
 
@@ -158,7 +152,6 @@ public class Vista extends javax.swing.JFrame {
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabelTotalVariables, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
@@ -166,7 +159,11 @@ public class Vista extends javax.swing.JFrame {
                                 .addComponent(btnAttr, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnValue, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -184,9 +181,11 @@ public class Vista extends javax.swing.JFrame {
                     .addComponent(jLabelTotalVariables))
                 .addGap(8, 8, 8)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAttr)
                     .addComponent(btnValue))
@@ -234,9 +233,11 @@ public class Vista extends javax.swing.JFrame {
     public javax.swing.JMenuItem jMenuItemCerrar;
     public javax.swing.JMenuItem jMenuItemGuardar;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    public javax.swing.JTextArea jTextAreaAttr;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     public javax.swing.JTable tblDatos;
+    public javax.swing.JTextArea txtAreaAtr;
+    public javax.swing.JTextArea txtAreaVal;
     // End of variables declaration//GEN-END:variables
 
     public JLabel getjLabelFichero() {
@@ -245,10 +246,6 @@ public class Vista extends javax.swing.JFrame {
 
     public JLabel getjLabelTotalVariables() {
         return jLabelTotalVariables;
-    }
-
-    public JTextArea getjTextAreaAttr() {
-        return jTextAreaAttr;
     }
 
     public JTable getTblDatos() {
@@ -262,11 +259,11 @@ public class Vista extends javax.swing.JFrame {
     public JButton getBtnValue() {
         return btnValue;
     }
-    
+
     public JButton getBtnAttr() {
         return btnAttr;
     }
-    
+
     public JMenuItem getjMenuItemAbrir() {
         return jMenuItemAbrir;
     }
@@ -274,6 +271,12 @@ public class Vista extends javax.swing.JFrame {
     public JMenuItem getjMenuItemCerrar() {
         return jMenuItemCerrar;
     }
-    
-    
+
+    public JTextArea getTxtAreaAtr() {
+        return txtAreaAtr;
+    }
+
+    public JTextArea getTxtAreaVal() {
+        return txtAreaVal;
+    }
 }

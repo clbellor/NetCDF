@@ -5,22 +5,20 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import logica.Respuesta;
 import ucar.ma2.Array;
-import ucar.nc2.Attribute;
 import ucar.nc2.Variable;
 
 /**
  * clase controlador vista principal
  */
-public class Controlador implements ActionListener {
+public class Controlador implements ActionListener, ListSelectionListener {
 
     private final Vista vista;
 
@@ -32,22 +30,32 @@ public class Controlador implements ActionListener {
         vista = ventana;
         iniciarEventos();
     }
-    
-    public void iniciarEventos(){
+
+    public void iniciarEventos() {
         vista.getBtnAttr().addActionListener(this);
         vista.getBtnValue().addActionListener(this);
+        vista.getTblDatos().getSelectionModel().addListSelectionListener(this);
     }
-    
+
     public void actionPerformed(ActionEvent e) {
-         switch (e.getActionCommand()) {
+        switch (e.getActionCommand()) {
             case "Mostar Atributos":
                 mostrarAtributos();
                 break;
             case "Mostar Valores":
                 mostrarValores();
-                break;    
+                break;
             default:
                 throw new AssertionError();
+        }
+    }
+
+    @Override
+    public void valueChanged(ListSelectionEvent lse) {
+        if (!lse.getValueIsAdjusting()) {
+            this.fila = vista.getTblDatos().getSelectedRow();
+            mostrarAtributos();
+            mostrarValores();
         }
     }
 
@@ -81,7 +89,7 @@ public class Controlador implements ActionListener {
             DefaultTableModel model = (DefaultTableModel) vista.getTblDatos().getModel();
             variables.forEach(var -> {
                 model.addRow(new Object[]{var.getFullName(), var.getDataType(), var.getDescription(), var.getDimensions(),
-                    "", var.getFullName(), Arrays.toString(var.getShape()), var.getUnitsString()});
+                    var.getFullName(), Arrays.toString(var.getShape()), var.getUnitsString()});
             });
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -93,12 +101,12 @@ public class Controlador implements ActionListener {
         try {
             if (this.fila != null) {
                 data = this.variables.get(this.fila).read();
-                vista.getjTextAreaAttr().setText(data.toString());
+                vista.getTxtAreaVal().setText(data.toString());
             } else {
-                vista.getjTextAreaAttr().setText("Seleccione una fila");
+                vista.getTxtAreaVal().setText("Seleccione una fila");
             }
         } catch (Exception ex) {
-            vista.getjTextAreaAttr().setText("error: " + ex.getMessage());
+            vista.getTxtAreaVal().setText("error: " + ex.getMessage());
         }
     }
 
@@ -106,13 +114,13 @@ public class Controlador implements ActionListener {
         try {
             if (this.fila != null) {
                 this.variables.get(this.fila).attributes().forEach(attr -> {
-                    vista.getjTextAreaAttr().append("  Nombre atributo: " + attr.getFullName() + "\n" + "   Tipo: " + attr.getDataType().name() + "\n" + "   Valor numerico :" + attr.getNumericValue() + "\n" + "   Valor cadena :" + attr.getStringValue() + "\n");
+                    vista.getTxtAreaAtr().append("  Nombre atributo: " + attr.getFullName() + "\n" + "   Tipo: " + attr.getDataType().name() + "\n" + "   Valor numerico :" + attr.getNumericValue() + "\n" + "   Valor cadena :" + attr.getStringValue() + "\n");
                 });
             } else {
-                vista.getjTextAreaAttr().setText("Seleccione una fila");
+                vista.getTxtAreaAtr().setText("Seleccione una fila");
             }
         } catch (Exception ex) {
-            vista.getjTextAreaAttr().setText("error: " + ex.getMessage());
+            vista.getTxtAreaAtr().setText("error: " + ex.getMessage());
         }
     }
 

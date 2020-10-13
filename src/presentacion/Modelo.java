@@ -1,6 +1,5 @@
 package presentacion;
 
-import java.awt.Color;
 import logica.Respuesta;
 import logica.Sistema;
 
