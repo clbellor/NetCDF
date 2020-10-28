@@ -9,6 +9,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import logica.Respuesta;
+import persistencia.VariableDTO;
 import ucar.ma2.Array;
 import ucar.nc2.Dimension;
 import ucar.nc2.Variable;
@@ -20,7 +21,7 @@ public class Controlador implements ListSelectionListener {
 
     private final Vista vista;
 
-    private List<Variable> variables;
+    private List<VariableDTO> variables;
     File fichero = null;
     Integer fila = null;
 
@@ -74,7 +75,7 @@ public class Controlador implements ListSelectionListener {
      */
     public void leerArchivo(String filename) {
         try {
-            Respuesta<List<Variable>> respuesta = vista.getModelo().leerArchivo(filename);
+            Respuesta<List<VariableDTO>> respuesta = vista.getModelo().leerArchivo(filename);
             if (respuesta.isError()) {
                 vista.getjLabelFichero().setText(respuesta.getMensaje());
             }
@@ -82,8 +83,8 @@ public class Controlador implements ListSelectionListener {
             vista.getjLabelTotalVariables().setText(String.valueOf(variables.size()));
             DefaultTableModel model = (DefaultTableModel) vista.getTblDatos().getModel();
             variables.forEach(var -> {
-                model.addRow(new Object[]{var.getFullName(), var.getDataType(), var.getDescription(), obtenerDimensiones(var.getDimensions()),
-                    "", obtenerForma(var.getShape()), var.getUnitsString()});
+                model.addRow(new Object[]{var.getNombre(), var.getTipoDato(), var.getDescripcion(), var.getDimensiones(),
+                    var.getGrupo(), var.getForma(), var.getUnidades()});
             });
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -94,11 +95,9 @@ public class Controlador implements ListSelectionListener {
      * Muestra los valores de las variables del archivo
      */
     public void mostrarValores() {
-        Array data;
         try {
             if (this.fila != null) {
-                data = this.variables.get(this.fila).read();
-                vista.getTxtAreaVal().setText(data.toString());
+                vista.getTxtAreaVal().setText(this.variables.get(this.fila).getValores());
             } else {
                 vista.getTxtAreaVal().setText("Seleccione una fila");
             }
@@ -113,7 +112,7 @@ public class Controlador implements ListSelectionListener {
     public void mostrarAtributos() {
         try {
             if (this.fila != null) {               
-                vista.getTxtAreaAtr().setText(this.variables.get(this.fila).toString());
+                vista.getTxtAreaAtr().setText(this.variables.get(this.fila).getAtributos());
             } else {
                 vista.getTxtAreaAtr().setText("Seleccione una fila");
             }
@@ -121,45 +120,7 @@ public class Controlador implements ListSelectionListener {
             vista.getTxtAreaAtr().setText("error: " + ex.getMessage());
         }
     }
-
-    /**
-     * metodo para obtener dimensiones
-     * @param d lista de dimensiones
-     * @return String
-     */
-    public String obtenerDimensiones(List<Dimension> d) {
-        String cadena = "";
-        if (!d.isEmpty()) {
-            for (Dimension dim : d) {
-                if (cadena.isEmpty()) {
-                    cadena += dim.getFullName();
-                } else {
-                    cadena += "," + dim.getFullName();
-                }
-            }
-        }
-        return cadena;
-    }
-
-    /**
-     * Metodo para obtener formas
-     * @param f formas
-     * @return String
-     */
-    public String obtenerForma(int[] f) {
-        String cadena = "";
-        if (f.length > 0) {
-            for (int i : f) {
-                if (cadena.isEmpty()) {
-                    cadena += i;
-                } else {
-                    cadena += "," + i;
-                }
-            }
-        }
-        return cadena;
-    }
-
+    
     public Integer getFila() {
         return fila;
     }

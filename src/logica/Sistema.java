@@ -1,13 +1,13 @@
 package logica;
 
-import persistencia.DatosDTO;
+import persistencia.VariableDTO;
 
 /**
  * Clase principal logica, centraliza funciones para tratamiento de archivo
  */
 public class Sistema {
 
-    private DatosDTO datos;
+    private VariableDTO datos;
     private final LecturaArchivo lecturaArchivo;
 
     public Sistema() {
@@ -18,11 +18,11 @@ public class Sistema {
         return lecturaArchivo;
     }
     
-    public DatosDTO getDatos() {
+    public VariableDTO getDatos() {
         return datos;
     }
 
-    public void setDatos(DatosDTO datos) {
+    public void setDatos(VariableDTO datos) {
         this.datos = datos;
     }
 
